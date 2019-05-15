@@ -1,16 +1,20 @@
 CREATE SCHEMA cca
     CREATE TABLE users (
         user_id BIGINT,
-        join_date timestamptz
+        join_date timestamptz DEFAULT current_timestamp()
     )
     CREATE TABLE schools (
         school_id SMALLINT,
         school_name text,
         school_abbr text,
         region text,
-        state text,
+        province text,
+        color_primary varchar(6),
+        color_secondary varchar(6),
+        color_alt_primary varchar(6),
+        color_alt_secondary varchar(6),
         president BIGINT,
-        founding_date timestamptz
+        founding_date timestamptz DEFAULT current_timestamp()
     )
     CREATE TABLE students (
         student_id BIGINT,
@@ -26,9 +30,9 @@ CREATE SCHEMA cca
     )
 ;
 
-/***********************************************************************************************************************
+/*******************************************************************************
 * Assign Primary keys
-***********************************************************************************************************************/
+*******************************************************************************/
 
 /* cca.users */
 ALTER TABLE cca.users
@@ -50,9 +54,9 @@ ALTER TABLE cca.rl_accounts
     ADD CONSTRAINT pk__systems PRIMARY KEY (user_id, system_type)
 ;
 
-/***********************************************************************************************************************
+/*******************************************************************************
 * Assign Foreign keys
-***********************************************************************************************************************/
+*******************************************************************************/
 
 /* cca.schools*/
 ALTER TABLE cca.schools
@@ -70,11 +74,21 @@ ALTER TABLE cca.rl_accounts
     ADD CONSTRAINT fk__systems__user_id FOREIGN KEY (user_id) REFERENCES cca.users(user_id)
 ;
 
-/***********************************************************************************************************************
+/*******************************************************************************
 * Assign Other Constraints
-***********************************************************************************************************************/
+*******************************************************************************/
 
-/* cca.users */
+/* cca.users make join_date assign on record entry */
+ALTER TABLE cca.users
+    ADD CONSTRAINT df__users__join_date DEFAULT now() for [join_date]
+;
+
+/* cca.schools make founding_date assign on record entry */
+ALTER TABLE cca.schools
+    ALTER COLUMN founding_date SET DEFAULT now()
+;
+
+/* cca.rl_accounts restrict system types to valid systems */
 ALTER TABLE cca.rl_accounts
     ADD CONSTRAINT chk__systems__system_type_is_valid CHECK (system_type IN('xbox', 'psn', 'steam', 'switch'))
 ;
