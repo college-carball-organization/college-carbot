@@ -4,6 +4,7 @@
   "description": "Discord bot for the College Carball Association (CCA) server",
   "main": "./dist/app.js",
   "scripts": {
+    "compile": "tsc",
     "dev": "tsc-watch --onSuccess 'node -r dotenv/config ./dist/app.js'",
     "start": "node -r dotenv/config ./dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

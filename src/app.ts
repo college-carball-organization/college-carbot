@@ -5,7 +5,7 @@ import * as path from "path";
 import sqlite from "sqlite";
 
 if (process.env.BOT_OWNER == "undefined") {
-    console.log("You must define the BOT_OWNER environment variable");
+    console.log("You must define the BOT_OWNER environment variable!");
     process.exit();
 }
 
@@ -32,7 +32,7 @@ client.setProvider(
 ).catch(console.error);
 
 if (process.env.BOT_TOKEN == "undefined") {
-    console.log("You must define the BOT_TOKEN environment variable");
+    console.log("You must define the BOT_TOKEN environment variable!");
     process.exit();
 }
 
