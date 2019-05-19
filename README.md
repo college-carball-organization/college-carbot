@@ -9,11 +9,11 @@
 
 ```sh
 git clone <this github repo>
-cd <this github repo>
+cd college-carbot
 npm install
 ```
 
-The install above will install all dependencie. If you wish to only install the
+The install above will install all dependencies. If you wish to only install the
 production dependencies, replace the last command with the following
 
 ```sh
@@ -21,6 +21,10 @@ npm install --only=production
 ```
 
 ## Running the bot
+
+CollegeCarbot requires a discord bot token to authenticate its login propcess.
+This token should be added to the ENV file `.env`, which should be
+formatted using `.env.example` as an example.
 
 ### Production
 
@@ -32,17 +36,9 @@ npm start
 
 ### Development
 
-Running the bot in development mode only requires you to have installed the
-devDependencies and run  the following command.
+Running the bot in development mode requires you to have installed the
+devDependencies from the Installation section and run the following command.
 
 ```sh
-npm start
+npm run dev
 ```
-
-## Contributing
-
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request

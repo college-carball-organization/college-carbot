@@ -4,9 +4,14 @@ import Commando from "discord.js-commando";
 import * as path from "path";
 import sqlite from "sqlite";
 
+if (process.env.BOT_OWNER == "undefined") {
+    console.log("You must define the BOT_OWNER environment variable");
+    process.exit();
+}
+
 const client = new Commando.CommandoClient({
     commandPrefix: '|',
-    owner: '108369316512030720'
+    owner: process.env.BOT_OWNER
 });
 
 client.registry
@@ -26,6 +31,12 @@ client.setProvider(
           .then(db => new Commando.SQLiteProvider(db))
 ).catch(console.error);
 
-client.login('BOT SECRET TOKEN')
+if (process.env.BOT_TOKEN == "undefined") {
+    console.log("You must define the BOT_TOKEN environment variable");
+    process.exit();
+}
+
+
+client.login(process.env.BOT_TOKEN)
       .then(() => console.log("Client has succesfully logged in!"))
       .catch(() => console.log("Client FAILED to login!"));
