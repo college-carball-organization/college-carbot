@@ -1,6 +1,9 @@
 "use strict";
-/// <reference path='../../node_modules/discord.js-commando/typings/index.d.ts' />
-/// <reference path='../../node_modules/discord.js/typings/index.d.ts' />
+/*******************************************************************************
+ * FILE: GrabUsers
+ * DESCRIPTION:
+ *  This is a test command created to get familiar with Discord.js and Commando.
+ ******************************************************************************/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -10,6 +13,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/// <reference path='../../node_modules/discord.js-commando/typings/index.d.ts' />
+/// <reference path='../../node_modules/discord.js/typings/index.d.ts' />
 const discord_js_commando_1 = require("discord.js-commando");
 class GrabUsersCommand extends discord_js_commando_1.Command {
     constructor(client) {
@@ -29,27 +34,30 @@ class GrabUsersCommand extends discord_js_commando_1.Command {
             ]
         });
     }
-    run(msg, args) {
+    run(msg, { role }) {
         return __awaiter(this, void 0, void 0, function* () {
+            /* Get the guild the command was sent from */
             let guild = msg.guild;
             if (!guild.available) {
-                return msg.reply('This command only works in guilds!');
+                return msg.channel.send('This command only works in guilds!');
             }
-            let selectedRole = guild.roles.find(role => {
-                return role.name === args;
+            /* Obtain the role the argument references (if it exists) */
+            let selectedRole = guild.roles.find(r => {
+                return r.name === role;
             });
-            if (selectedRole === undefined) {
-                return msg.reply(`Role '${args}' not found!`);
+            if (selectedRole === null) {
+                return msg.channel.send(`Role '${role}' not found!`);
             }
-            let guildMembers = guild.members;
-            guildMembers.sweep(member => {
-                return member.roles.find(role => role == selectedRole) === undefined;
-            });
-            let usernames = guildMembers.array().map(member => member.user.username);
-            return msg.reply(usernames.join('\n'));
+            /* Obtain a list of all users who have the given role */
+            let usernames = guild.members.array()
+                .filter((member) => {
+                return member.roles.find((role) => role === selectedRole);
+            })
+                .map((member) => member.user.username);
+            return msg.channel.send(usernames.join('\n'));
         });
     }
 }
 exports.GrabUsersCommand = GrabUsersCommand;
 ;
-//# sourceMappingURL=grab-users.js.map
+//# sourceMappingURL=GrabUsers.js.map
