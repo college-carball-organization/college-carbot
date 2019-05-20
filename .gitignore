@@ -6,8 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 
 # Bot configuration files
-dist/settings.sqlite3
 .env
+
+# Build artifacts
+dist/
 
 # Runtime data
 pids
