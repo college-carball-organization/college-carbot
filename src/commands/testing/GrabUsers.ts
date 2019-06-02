@@ -15,7 +15,7 @@ export class GrabUsersCommand extends Command {
     constructor(client: CommandoClient) {
         super(client, {
             name: 'grab-users',
-            group: 'roles',
+            group: 'testing',
             aliases: ['gu'],
             memberName: 'grab-users',
             description: 'Return all users who have a given role.',
