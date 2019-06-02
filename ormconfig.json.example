@@ -1,0 +1,19 @@
+{
+   "type": "pg",
+   "host": "",
+   "port": 3306,
+   "username": "",
+   "password": "",
+   "database": "",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entities/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ]
+}

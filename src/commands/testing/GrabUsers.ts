@@ -4,8 +4,8 @@
  *  This is a test command created to get familiar with Discord.js and Commando.
  ******************************************************************************/
 
-/// <reference path='../../node_modules/discord.js-commando/typings/index.d.ts' />
-/// <reference path='../../node_modules/discord.js/typings/index.d.ts' />
+/// <reference path='../../../node_modules/discord.js-commando/typings/index.d.ts' />
+/// <reference path='../../../node_modules/discord.js/typings/index.d.ts' />
 
 import {CommandoClient, Command, CommandMessage} from "discord.js-commando";
 import {Guild, Role, Message, GuildMember} from "discord.js";
@@ -15,7 +15,7 @@ export class GrabUsersCommand extends Command {
     constructor(client: CommandoClient) {
         super(client, {
             name: 'grab-users',
-            group: 'roles',
+            group: 'testing',
             aliases: ['gu'],
             memberName: 'grab-users',
             description: 'Return all users who have a given role.',

@@ -7,6 +7,7 @@ yarn-error.log*
 
 # Bot configuration files
 .env
+ormconfig.json
 
 # Build artifacts
 dist/
