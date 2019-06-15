@@ -4,8 +4,10 @@
  *  A User Entity
  ******************************************************************************/
 
-import {Column, CreateDateColumn, Entity, JoinColumn, OneToOne,
-        PrimaryGeneratedColumn} from 'typeorm';
+import {
+    Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne,
+    PrimaryGeneratedColumn
+} from 'typeorm';
 import {User} from './User'
 
 
@@ -114,6 +116,11 @@ export class School {
     @OneToOne(() => User)
     @JoinColumn({ name: "president", referencedColumnName: "id" })
     president!: User;
+
+    @OneToMany(type => User, user => user.id, {
+        cascade: true
+    })
+    students!: User[];
 
     @CreateDateColumn({ name: "founding_date", type: "timestamptz" })
     foundingDate!: Date;
