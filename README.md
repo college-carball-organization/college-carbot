@@ -3,7 +3,7 @@
   College Carball Association (CCA) discord server. Its primary mission is to
   keep track of discord roles of users given their current status as students.
 
-[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/EDwd5wr)
+[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/7EYXJNR)
 
 ## Installation
 
