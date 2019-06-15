@@ -7,7 +7,6 @@
 import {Command, CommandMessage, CommandoClient} from "discord.js-commando";
 import {DMChannel,
     GroupDMChannel,
-    GuildMember,
     Message,
     Snowflake,
     TextChannel,
@@ -60,8 +59,7 @@ export class AddSchoolCommand extends Command {
         })
     }
 
-    public async run(msg: CommandMessage): Promise<Message | Message[]>
-    {
+    public async run(msg: CommandMessage): Promise<Message | Message[]> {
         // Command constants
         const channel = msg.channel;
         const cmdAuthor = msg.author;
