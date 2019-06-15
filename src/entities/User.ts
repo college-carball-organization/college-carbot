@@ -8,7 +8,7 @@ import {Entity, PrimaryColumn, CreateDateColumn} from 'typeorm';
 import {Snowflake} from "discord.js";
 
 
-@Entity()
+@Entity("users")
 export class User {
 
     @PrimaryColumn({ name: "user_id", type: "bigint" })

@@ -34,7 +34,8 @@ export async function startBot() {
     client.registry
         // Registers your custom command groups
         .registerGroups([
-            ['testing', 'Commands for Testing'],
+            ['students', 'Student administration commands'],
+            ['testing', 'Testing commands']
         ])
 
         // Registers all built-in groups, commands, and argument types
@@ -42,6 +43,7 @@ export async function startBot() {
 
         // Registers all of the commands
         .registerCommandsIn(path.join(__dirname, 'commands'))
+        .registerCommandsIn(path.join(__dirname, 'commands/students'))
         .registerCommandsIn(path.join(__dirname, 'commands/testing'));
 
     // Setup data storage provider

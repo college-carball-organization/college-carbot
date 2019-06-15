@@ -67,4 +67,4 @@ export class AddUserToDatabaseCommand extends Command {
                 return msg.channel.send(`Failed to add '${tag}' to database!`);
             });
     }
-};
+}
