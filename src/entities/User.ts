@@ -21,7 +21,7 @@ export class User {
     @CreateDateColumn({ name: "join_date", type: "timestamptz" })
     joinDate!: Date;
 
-    @ManyToOne(type => School, school => school.students)
+    @ManyToOne(type => School)
     @JoinColumn({ name: "school_id" })
     school!: School;
 

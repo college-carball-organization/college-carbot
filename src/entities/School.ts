@@ -119,11 +119,11 @@ export class School {
     @Column({ name: "color_alt_secondary", type: "char", length: 6 })
     colorAltSecondary!: string;
 
-    @OneToOne(() => User)
-    @JoinColumn({ name: "president", referencedColumnName: "id" })
+    @OneToOne(type => User)
+    @JoinColumn()
     president!: User;
 
-    @OneToMany(type => User, user => user.id, {
+    @OneToMany(type => User, user => user.school, {
         cascade: true
     })
     students!: User[];
