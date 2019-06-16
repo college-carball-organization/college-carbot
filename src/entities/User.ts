@@ -9,7 +9,10 @@ import {Snowflake} from "discord.js";
 import {School} from "./School";
 
 
-@Entity("users")
+@Entity({
+    name: "users",
+    schema: "cca"
+})
 export class User {
 
     @PrimaryColumn({ name: "user_id", type: "bigint" })

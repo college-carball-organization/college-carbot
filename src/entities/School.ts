@@ -83,7 +83,13 @@ export enum Province {
     NULL = "undefined"
 }
 
-@Entity("schools")
+@Entity({
+    name: "schools",
+    schema: "cca",
+    orderBy: {
+        name: "ASC"
+    }
+})
 export class School {
 
     @PrimaryGeneratedColumn({ name: "school_id", type: "smallint" })
