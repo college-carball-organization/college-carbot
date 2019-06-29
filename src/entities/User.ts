@@ -18,7 +18,7 @@ export class User {
     @PrimaryColumn({ name: "user_id", type: "bigint" })
     id!: Snowflake;
 
-    @CreateDateColumn({ name: "join_date", type: "timestamptz" })
+    @CreateDateColumn({ name: "join_date", type: "timestamp" })
     joinDate!: Date;
 
     @ManyToOne(type => School)

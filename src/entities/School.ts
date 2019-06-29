@@ -128,7 +128,7 @@ export class School {
     })
     students!: User[];
 
-    @CreateDateColumn({ name: "founding_date", type: "timestamptz" })
+    @CreateDateColumn({ name: "founding_date", type: "timestamp" })
     foundingDate!: Date;
 
 }

@@ -79,12 +79,14 @@ export class AddSchoolCommand extends Command {
             .setTitle(schoolRecord!.name)
             .addField('Region', schoolRecord!.region, true)
             .addField('Province', schoolRecord!.province, true)
+            .addField('Founding Date', schoolRecord!.foundingDate, true)
             .addField('President', president)
-            .addField('Members', studentTags.join('\n'))
+            .addField('Members', studentTags.sort().join('\n'))
             .setTimestamp();
 
         const runtime = process.hrtime(_start);
         const msRuntime = Math.ceil(
+            // Seconds to milliseconds AND nanoseconds to milliseconds
             (runtime[0] * 1000) + (runtime[1] / 1000000)
         );
 
