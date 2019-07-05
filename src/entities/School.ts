@@ -123,9 +123,7 @@ export class School {
     @JoinColumn()
     president!: User;
 
-    @OneToMany(type => User, user => user.school, {
-        cascade: true
-    })
+    @OneToMany(type => User, user => user.school, {onDelete: "CASCADE"})
     students!: User[];
 
     @CreateDateColumn({ name: "founding_date", type: "timestamp" })
