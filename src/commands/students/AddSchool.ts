@@ -59,6 +59,12 @@ export class AddSchoolCommand extends Command {
         })
     }
 
+    public hasPermission(msg: CommandMessage): boolean | string {
+        return msg.member.roles.find(
+            role => role.name === "Eboard" || role.name === "Moderators"
+        ) != undefined;
+    }
+
     public async run(msg: CommandMessage): Promise<Message | Message[]> {
         // Command constants
         const channel = msg.channel;

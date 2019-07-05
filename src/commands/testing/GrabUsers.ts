@@ -19,6 +19,7 @@ export class GrabUsersCommand extends Command {
             aliases: ['gu'],
             memberName: 'grab-users',
             description: 'Return all users who have a given role.',
+            ownerOnly: true,
             args: [
                 {
                     key: 'role',

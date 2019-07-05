@@ -20,6 +20,7 @@ export class AddUserToDatabaseCommand extends Command {
             aliases: ['autd'],
             memberName: 'add-user-to-database',
             description: 'Add a discord user to the database',
+            ownerOnly: true,
             args: [
                 {
                     key: 'tag',
