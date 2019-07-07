@@ -9,6 +9,7 @@ import {GuildMember, Message, RichEmbed, Role, Snowflake, User} from "discord.js
 import {getConnection} from "typeorm";
 import {User as UserRecord} from "../../entities/User";
 import {Province, Region, School as SchoolRecord} from "../../entities/School";
+import {stringify} from "querystring";
 
 
 function isValidRGBHex(hex: string) : boolean {
@@ -43,7 +44,7 @@ export class AddSchoolCommand extends Command {
                     key: 'school_name',
                     prompt: 'What is the full name of the school?',
                     type: 'string',
-                    max: 32
+                    max: 96
                 },
                 {
                     key: 'school_abbr',
@@ -148,7 +149,7 @@ export class AddSchoolCommand extends Command {
         let school_province = (<any> Province)[province];
         if (school_province === undefined) {
             return channel.send(
-                `'${province}' is an invalid province.` +
+                `'${province}' is an invalid province.\n` +
                 'Province must be one of the following:\n' +
                 provinces().join('\n')
             );
@@ -200,18 +201,15 @@ export class AddSchoolCommand extends Command {
         // Add students to database if they aren't already inside
         const studentRecordObjects = students.map(
             guildMember => {
-                return { id: guildMember.user.id }
+                const snowflake: Snowflake = guildMember.user.id;
+                return { id: snowflake}
             }
         );
 
-        await userRepository.createQueryBuilder()
-            .insert()
-            .values(studentRecordObjects)
-            .onConflict(`("user_id") DO NOTHING`)
-            .execute();
-
-        const studentRecords = await userRepository.find({
-            where: studentRecordObjects
+        const studentRecords: Array<UserRecord> = students.map(student => {
+            let record = new UserRecord();
+            record.id = student.user.id;
+            return record;
         });
 
         /***********************************************************************
@@ -244,8 +242,14 @@ export class AddSchoolCommand extends Command {
         if (presidentRecord !== undefined) {
             newSchool.president = presidentRecord;
         }
-        newSchool.students = studentRecords;
         await schoolRepository.save(newSchool);
+
+        let promises: Promise<UserRecord>[] = [];
+        studentRecords.forEach(student => {
+            student.school = newSchool;
+            promises.push(userRepository.save(student));
+        });
+        await Promise.all(promises);
 
         let response = new RichEmbed()
             .setColor('#FFFFFF')
@@ -255,7 +259,7 @@ export class AddSchoolCommand extends Command {
             .addField('Founding Date', newSchool.foundingDate, true)
             .addField('President',
                 ( newSchool.president != undefined
-                ? newSchool.president.id
+                ? president!.user.tag
                 : "No president"))
             .addField('Members', students.map(
                 guildMember => guildMember.user.tag
