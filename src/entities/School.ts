@@ -119,7 +119,7 @@ export class School {
     @Column({ name: "color_alt_secondary", type: "char", length: 6 })
     colorAltSecondary!: string;
 
-    @OneToOne(type => User)
+    @OneToOne(type => User, {onDelete: "SET NULL"})
     @JoinColumn()
     president!: User;
 
