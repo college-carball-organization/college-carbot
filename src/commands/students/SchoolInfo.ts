@@ -74,6 +74,10 @@ export class AddSchoolCommand extends Command {
             }
         }
 
+        const members =
+            studentTags.length > 0
+            ? studentTags.sort().join('\n')
+            : "No members"
         let response = new RichEmbed()
             .setColor('#FFFFFF')
             .setTitle(schoolRecord!.name)
@@ -81,7 +85,7 @@ export class AddSchoolCommand extends Command {
             .addField('Province', schoolRecord!.province, true)
             .addField('Founding Date', schoolRecord!.foundingDate, true)
             .addField('President', president)
-            .addField('Members', studentTags.sort().join('\n'))
+            .addField('Members', members)
             .setTimestamp();
 
         const runtime = process.hrtime(_start);
