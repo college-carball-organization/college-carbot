@@ -7,7 +7,8 @@
     "compile": "tsc",
     "dev": "tsc-watch --onSuccess 'node -r dotenv/config ./dist/app.js'",
     "start": "node -r dotenv/config ./dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typeorm:migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "reflect-metadata": "^0.1.13",
     "sodium": "^2.0.3",
     "sqlite": "^2.9.3",
+    "ts-node": "^8.3.0",
     "tsc-watch": "^2.2.0",
     "typeorm": "^0.2.17",
     "typescript": "^3.4.5"

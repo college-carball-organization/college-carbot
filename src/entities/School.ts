@@ -85,7 +85,6 @@ export enum Province {
 
 @Entity({
     name: "schools",
-    schema: "cca",
     orderBy: {
         name: "ASC"
     }
@@ -120,7 +119,7 @@ export class School {
     colorAltSecondary!: string;
 
     @OneToOne(type => User, {onDelete: "SET NULL"})
-    @JoinColumn()
+    @JoinColumn({ name: "president_id" })
     president!: User;
 
     @OneToMany(type => User, user => user.school, {onDelete: "CASCADE"})

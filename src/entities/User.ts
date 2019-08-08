@@ -10,8 +10,7 @@ import {School} from "./School";
 
 
 @Entity({
-    name: "users",
-    schema: "cca"
+    name: "users"
 })
 export class User {
 
