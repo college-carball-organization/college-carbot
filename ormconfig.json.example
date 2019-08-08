@@ -8,12 +8,13 @@
    "synchronize": false,
    "logging": false,
    "entities": [
-      "dist/entities/**/*.js"
-   ],
-   "migrations": [
-      "dist/migration/**/*.js"
-   ],
-   "subscribers": [
-      "dist/subscriber/**/*.js"
-   ]
+       "dist/entities/**/*.js"
+     ],
+     "migrationsTableName": "migrations",
+     "migrations": [
+       "migrations/**/*.ts"
+     ],
+     "cli": {
+       "migrationsDir": "migrations"
+     }
 }
