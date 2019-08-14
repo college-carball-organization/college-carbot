@@ -5,11 +5,10 @@
  ******************************************************************************/
 
 import {Command, CommandMessage, CommandoClient} from "discord.js-commando";
-import {GuildMember, Message, RichEmbed, Role, Snowflake, User} from "discord.js";
+import {GuildMember, Message, RichEmbed, Role} from "discord.js";
 import {getConnection} from "typeorm";
 import {User as UserRecord} from "../../entities/User";
 import {Province, Region, School as SchoolRecord} from "../../entities/School";
-import {stringify} from "querystring";
 
 
 function isValidRGBHex(hex: string) : boolean {
@@ -196,14 +195,6 @@ export class AddSchoolCommand extends Command {
             (student: GuildMember) => student.roles.find(
                 (role: Role) => role === president_role
             ) != undefined
-        );
-
-        // Add students to database if they aren't already inside
-        const studentRecordObjects = students.map(
-            guildMember => {
-                const snowflake: Snowflake = guildMember.user.id;
-                return { id: snowflake}
-            }
         );
 
         const studentRecords: Array<UserRecord> = students.map(student => {
