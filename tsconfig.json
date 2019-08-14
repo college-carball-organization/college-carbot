@@ -22,6 +22,7 @@
     "resolveJsonModule": true                 /* Include modules imported with '.json' extension */
   },
   "include": [
+    "./migrations/*",
     "./src/**/*"
   ]
 }
