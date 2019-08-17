@@ -9,7 +9,7 @@
     "start": "npm run typeorm:migrate && node -r dotenv/config ./dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker:pull": "docker pull postgres:12",
-    "docker:run": "docker run --rm --name cca-postgres --env-file ./.env -d -p 5432:5432 postgres",
+    "docker:run": "docker run --rm --name cca-postgres --env-file ./.env -d -p 5432:5432 postgres:12",
     "docker:stop": "docker kill cca-postgres",
     "env:start": "npm run docker:pull && npm run docker:run && npm run typeorm:migrate",
     "env:stop": "npm run docker:stop",
