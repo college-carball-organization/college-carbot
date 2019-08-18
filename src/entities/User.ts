@@ -4,7 +4,7 @@
  *  A User Entity
  ******************************************************************************/
 
-import {Entity, PrimaryColumn, CreateDateColumn, ManyToOne, JoinColumn} from 'typeorm';
+import {Entity, PrimaryColumn, CreateDateColumn, ManyToOne, JoinColumn, Column} from 'typeorm';
 import {Snowflake} from "discord.js";
 import {School} from "./School";
 
@@ -23,5 +23,8 @@ export class User {
     @ManyToOne(type => School, {onDelete: "SET NULL"})
     @JoinColumn({ name: "school_id" })
     school!: School;
+
+    @Column({ name: "is_vice_president", type: "boolean", nullable: false, default: false })
+    isVicePresident!: boolean;
 
 }
