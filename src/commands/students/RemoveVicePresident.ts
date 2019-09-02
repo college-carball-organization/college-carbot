@@ -1,7 +1,7 @@
 /*******************************************************************************
- * FILE: SetVicePresident
+ * FILE: RemoveVicePresident
  * DESCRIPTION:
- *  Set a user as a vice president.
+ *  Remove a user's Vice President role
  ******************************************************************************/
 
 import {Command, CommandMessage, CommandoClient} from "discord.js-commando";
@@ -15,16 +15,16 @@ export class SetPresidentCommand extends Command {
 
     constructor(client: CommandoClient) {
         super(client, {
-            name: 'set-vp',
+            name: 'remove-vp',
             group: 'students',
-            aliases: [],
-            memberName: 'set-vp',
-            description: `Set a school's vice president`,
+            aliases: ['rm-vp'],
+            memberName: 'remove-vp',
+            description: `Remove a school's vice president`,
             argsCount: 2,
             args: [
                 {
                     key: 'student',
-                    prompt: 'Who do you want to be vice president?',
+                    prompt: 'Who do you want to remove vice president from?',
                     type: 'user',
                     max: 32
                 }
@@ -65,16 +65,16 @@ export class SetPresidentCommand extends Command {
             return channel.send(`${student.username} is not affiliated with a school.`);
         }
 
-        if (userRecord.isVicePresident) {
+        if (!userRecord.isVicePresident) {
             return channel.send(
-                `${student.username} is already a vice president for ${userRecord.school.name}`
+                `${student.username} is already not a vice president for ${userRecord.school.name}`
             );
         }
 
         userRecord.isVicePresident = true;
         await userRepository.save(userRecord);
         return channel.send(
-            `Set ${student.username} as a vice president for ${userRecord.school.name}.`
+            `Removed ${student.username} as a vice president for ${userRecord.school.name}.`
         );
     }
 }
