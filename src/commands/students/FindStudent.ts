@@ -1,7 +1,7 @@
 /*******************************************************************************
- * FILE: LookupStudent
+ * FILE: FindStudent
  * DESCRIPTION:
- *  Lookup what school a given student goes to.
+ *  Lookup public information about a student.
  ******************************************************************************/
 
 import {Command, CommandMessage, CommandoClient} from "discord.js-commando";
@@ -14,11 +14,11 @@ export class AddSchoolCommand extends Command {
 
     constructor(client: CommandoClient) {
         super(client, {
-            name: 'lookup-student',
+            name: 'find-student',
             group: 'students',
-            aliases: [],
-            memberName: 'lookup-student',
-            description: 'Lookup a student in the database',
+            aliases: ['fs'],
+            memberName: 'find-student',
+            description: 'Find a student in the database',
             args: [
                 {
                     key: 'student',
