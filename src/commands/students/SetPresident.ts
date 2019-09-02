@@ -98,7 +98,7 @@ export class SetPresidentCommand extends Command {
         if (!shouldSetVP) {
             return channel.send(
                 `Sorry, I either did not get a response, you responded negatively, or I did not ` +
-                `understand the response. I Did **NOT** set ${student.username} as VP of ` +
+                `understand the response. I Did **NOT** set ${student.username} as president of ` +
                 `${matches[0].name}`
             );
         }
