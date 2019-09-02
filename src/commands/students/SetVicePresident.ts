@@ -5,28 +5,9 @@
  ******************************************************************************/
 
 import {Command, CommandMessage, CommandoClient} from "discord.js-commando";
-import {User as DiscordUser, DMChannel, GroupDMChannel, Message, TextChannel, User} from "discord.js";
-import {getConnection, getCustomRepository} from "typeorm";
-import {SchoolRepository} from "../../repositories/SchoolRepository";
-import {School} from "../../entities/School";
+import {Message, User} from "discord.js";
+import {getConnection} from "typeorm";
 import {User as UserRecord} from "../../entities/User";
-
-
-async function getResponse(
-    channel: TextChannel | DMChannel | GroupDMChannel,
-    user: DiscordUser,
-    timeout: number
-): Promise<string> {
-    return channel.awaitMessages(
-        message => message.author === user,
-        {
-            max: 1,
-            time: timeout,
-            errors: ['time']
-        })
-        .then(collection => Promise.resolve(collection.first().content))
-        .catch(() => Promise.resolve(""));
-}
 
 
 // noinspection JSUnusedGlobalSymbols
@@ -41,12 +22,6 @@ export class SetPresidentCommand extends Command {
             description: `Set a school's vice president`,
             argsCount: 2,
             args: [
-                {
-                    key: 'school',
-                    prompt: 'What school do you want to change the vice president for?',
-                    type: 'string',
-                    max: 64
-                },
                 {
                     key: 'student',
                     prompt: 'Who do you want to be vice president?',
@@ -67,54 +42,33 @@ export class SetPresidentCommand extends Command {
 
     public async run(
         msg: CommandMessage,
-        {
-            school,
-            student
-        }: {
-            school: string,
-            student: User
-        }
+        { student }: { student: User }
     ): Promise<Message | Message[]> {
-        const schoolRepo = getCustomRepository(SchoolRepository);
         const channel = msg.channel;
-
-        let matches: School[] = await schoolRepo.findFuzzySchools(school);
-
-        if (matches == null) {
-            return channel.send(`Could not find school '${school}'`);
-        }
-
-        if (matches.length == 0) {
-            return channel.send("Could not find school");
-        }
-
-
-        // Only check first response for now:
-        let schoolRecord = matches[0];
-        await channel.send(`Is '${schoolRecord.name}' the school you want to set the Vice President for?`);
-        const response: string = await getResponse(channel, msg.author, 20000);
-
-        const shouldSetVP: boolean = response.match(/yes|Yes|YES|y|Y|ye|YE/) !== null;
-        if (!shouldSetVP) {
-            return channel.send(
-                `Sorry, I either did not get a response, you responded negatively, or I did not ` +
-                `understand the response. I Did **NOT** set ${student.username} as VP of ` +
-                `${matches[0].name}`
-            );
-        }
 
         // Update database
         const db = getConnection();
         const userRepository = db.getRepository(UserRecord);
 
-        // Check if the snowflake already exists in the database.
-        let presRecord: UserRecord | undefined = await userRepository.findOne({ id: student.id });
-        if (presRecord == null || presRecord.school !== schoolRecord) {
-            return channel.send(`${student} is not a student of ${school}`);
+        let userRecord = await userRepository.findOne({
+            where: {
+                id: student.id
+            },
+            relations: ['school']
+        });
+
+        if (userRecord == null) {
+            userRecord = new UserRecord();
+            userRecord.id = student.id;
+            await userRepository.save(userRecord);
         }
 
-        presRecord.isVicePresident = true;
-        await userRepository.save(presRecord);
-        return channel.send(`Set ${student.username} as vide president of ${student.username}`);
+        if (userRecord.school == null) {
+            return channel.send(`${student.username} is not affiliated with a school.`);
+        }
+
+        userRecord.isVicePresident = true;
+        await userRepository.save(userRecord);
+        return channel.send(`Set ${student.username} as a vice president for ${userRecord.school.name}.`);
     }
 }
