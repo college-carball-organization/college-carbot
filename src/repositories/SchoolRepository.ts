@@ -17,7 +17,10 @@ export class SchoolRepository extends Repository<School> {
      * fuzzy search.
      */
     async findFuzzySchools(school: string) : Promise<School[]>{
-        let schools: School[] =  await this.createQueryBuilder("schools").getMany();
+        let schools: School[] = await this.find({
+            relations: ['students']
+        });
+
         const searchOptions = {
             shouldSort: true,
             threshold: 0.15,
