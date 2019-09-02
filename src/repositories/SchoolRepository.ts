@@ -24,7 +24,7 @@ export class SchoolRepository extends Repository<School> {
         const searchOptions = {
             shouldSort: true,
             threshold: 0.15,
-            distance: 20,
+            distance: 100,
             maxPatternLength: 32,
             minMatchCharLength: 1,
             keys: [
