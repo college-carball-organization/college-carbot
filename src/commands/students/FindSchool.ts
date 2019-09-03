@@ -81,7 +81,8 @@ export class AddSchoolCommand extends Command {
                         return 1;
                     return 0;
                 }
-            });
+            })
+            .slice(0, 20);
 
         // Get vice president
         let vicePresidents: string[] | string = schoolRecord.students

@@ -18,7 +18,7 @@ export class SchoolRepository extends Repository<School> {
      */
     async findFuzzySchools(school: string) : Promise<School[]>{
         let schools: School[] = await this.find({
-            relations: ['students']
+            relations: ['students', 'president']
         });
 
         const searchOptions = {
