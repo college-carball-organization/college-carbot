@@ -43,8 +43,7 @@ export async function startBot() {
 
         // Registers all of the commands
         .registerCommandsIn(path.join(__dirname, 'commands'))
-        .registerCommandsIn(path.join(__dirname, 'commands/students'))
-        .registerCommandsIn(path.join(__dirname, 'commands/testing'));
+        .registerCommandsIn(path.join(__dirname, 'commands/students'));
 
     // Setup data storage provider
     client.setProvider(
